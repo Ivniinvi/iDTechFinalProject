@@ -7,6 +7,8 @@ using namespace std;
 
 int main() {
 	unordered_map<string, string> um;
+	ofstream outfile("login.txt");
+	ifstream infile("login.txt");
 	while (true) {
 		char select;
 		cout << "Login Program" << endl;
