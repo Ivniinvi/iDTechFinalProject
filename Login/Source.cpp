@@ -21,6 +21,7 @@ int main() {
 			cout << "Password" << endl;
 			string password;
 			cin >> password;
+			um.insert({ password,username });
 		}
 		else if (select == 2) {
 			cout << "Username" << endl;
@@ -29,9 +30,16 @@ int main() {
 			cout << "Password" << endl;
 			string password;
 			cin >> password;
+			if (um[password] == username) {
+				cout << "You successfully logged in." << endl;
+				return 0;
+			}
+			else {
+				cout << "Incorrect username or password" << endl;
+			}
 		}
 		else if (select == 3) {
-
+			return 0;
 		}
 		else {
 			cout << "Invalid Input" << endl;
