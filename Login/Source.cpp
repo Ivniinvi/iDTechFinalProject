@@ -6,15 +6,15 @@
 using namespace std;
 
 int main() {
+	unordered_map<string, string> um;
 	while (true) {
-		unordered_map<string, string> um;
 		char select;
 		cout << "Login Program" << endl;
 		cout << "1:Register" << endl;
 		cout << "2:Login" << endl;
 		cout << "3:Exit" << endl;
 		cin >> select;
-		if (select == 1) {
+		if (select == '1') {
 			cout << "Username" << endl;
 			string username;
 			cin >> username;
@@ -23,7 +23,7 @@ int main() {
 			cin >> password;
 			um.insert({ password,username });
 		}
-		else if (select == 2) {
+		else if (select == '2') {
 			cout << "Username" << endl;
 			string username;
 			cin >> username;
@@ -38,7 +38,7 @@ int main() {
 				cout << "Incorrect username or password" << endl;
 			}
 		}
-		else if (select == 3) {
+		else if (select == '3') {
 			return 0;
 		}
 		else {
