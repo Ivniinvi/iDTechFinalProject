@@ -9,6 +9,11 @@ int main() {
 	unordered_map<string, string> um;
 	ofstream outfile("login.txt", ios::app);
 	ifstream infile("login.txt");
+	string p;
+	string u;
+	while (infile >> p&&infile >> u) {
+		um.insert({ p,u });
+	}
 	while (true) {
 		char select;
 		cout << "Login Program" << endl;
@@ -24,6 +29,7 @@ int main() {
 			string password;
 			cin >> password;
 			um.insert({ password,username });
+			outfile << password << " " << username << endl;
 		}
 		else if (select == '2') {
 			cout << "Username" << endl;
