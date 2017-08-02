@@ -7,7 +7,7 @@ using namespace std;
 
 int main() {
 	unordered_map<string, string> um;
-	ofstream outfile("login.txt");
+	ofstream outfile("login.txt", ios::app);
 	ifstream infile("login.txt");
 	while (true) {
 		char select;
