@@ -3,8 +3,54 @@
 #include <vector>
 #include <unordered_map>
 #include <fstream>
+#include <bitset>
 using namespace std;
-
+string xor (string e, string f) {
+	string endxor;
+	if (e.size() == f.size()) {
+		endxor = e;
+		for (int i = 0; i < e.size(); i++) {
+			endxor[i] = '0';
+			if (e[i] == '1') {
+				if (e[i] != f[i]) {
+					endxor[i] = '1';
+				}
+			}
+			if (f[i] == '1') {
+				if (f[i] != e[i]) {
+					endxor[i] = '1';
+				}
+			}
+		}
+		return endxor;
+	}
+	else {
+		return "Invalid Input";
+	}
+}
+string decode(string code, int shift) {
+	for (int i = 0; i < code.size(); i++) {
+		code[i] -= shift;
+		if (code[i] < 97) {
+			code[i] += 26;
+		}
+	}
+	return code;
+}
+string enc(string inp) {
+	string encout;
+	for (int i = 0; i < inp.size(); i++) {
+		bitset<8U> enctempone;
+		string enctemptwo;
+		enctempone = bitset<8>(inp[i]);
+		enctemptwo = enctempone.to_string();
+		encout = encout + enctemptwo;
+	}
+	string s = encout;
+	string half = s.substr(0, s.length() / 2);
+	string otherHalf = s.substr(s.length() / 2);
+	return xor (half, otherHalf);
+}
 int main() {
 	unordered_map<string, string> um;
 	ofstream outfile("login.txt", ios::app);
@@ -28,8 +74,8 @@ int main() {
 			cout << "Password" << endl;
 			string password;
 			cin >> password;
-			um.insert({ password,username });
-			outfile << password << " " << username << endl;
+			um.insert({ enc(password),username });
+			outfile << enc(password) << " " << username << endl;
 		}
 		else if (select == '2') {
 			cout << "Username" << endl;
@@ -38,7 +84,7 @@ int main() {
 			cout << "Password" << endl;
 			string password;
 			cin >> password;
-			if (um[password] == username) {
+			if (um[enc(password)] == username) {
 				cout << "You successfully logged in." << endl;
 				return 0;
 			}
