@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <fstream>
 #include <bitset>
+#include "map.h"
 using namespace std;
 string xor (string e, string f) {
 	string endxor;
@@ -37,7 +38,7 @@ string decode(string code, int shift) {
 	}
 	return code;
 }
-string enc(string inp) {
+string enc(string inp, bool proc) {
 	string encout;
 	for (int i = 0; i < inp.size(); i++) {
 		bitset<8U> enctempone;
@@ -49,9 +50,42 @@ string enc(string inp) {
 	string s = encout;
 	string half = s.substr(0, s.length() / 2);
 	string otherHalf = s.substr(s.length() / 2);
+	if (proc == true) {
+		cout << "This is the pre-encryption string: " << encout << endl;
+		cout << "This is the first encryption half: " << half << endl;
+		cout << "This is the second encryption half: " << otherHalf << endl;
+		cout << "This is the post-encryption string" << xor (half, otherHalf) << endl;
+	}
 	return xor (half, otherHalf);
 }
+void maze() {
+	Map m(12, 12);
+	m.createWall(0, 0, 0, 11);
+	m.createBorders();
+
+	m.setCharAt('!', 3, 1);
+	m.setCharAt('@', 3, 3);
+	m.setCharAt('E', 9, 3);
+	m.setCharDisplayText('!', "An arrow trap shot you in the head");
+	m.registerCollectable('@', "Health Potion");
+	m.registerCollectable('$', "Mana Potion");
+	m.startMovement();
+}
 int main() {
+	string procin;
+	bool proc = false;
+	cout << "Would you like to see the inner workings of this program? (YES or NO)" << endl;
+	cin >> procin;
+	if (procin == "YES") {
+		proc = true;
+		cout << "Now showing processes." << endl;
+	}
+	if (procin == "SKIP") {
+		maze();
+	}
+	else {
+		cout << "Process showing disabled" << endl;
+	}
 	unordered_map<string, string> um;
 	ofstream outfile("login.txt", ios::app);
 	ifstream infile("login.txt");
@@ -74,8 +108,8 @@ int main() {
 			cout << "Password" << endl;
 			string password;
 			cin >> password;
-			um.insert({ enc(password),username });
-			outfile << enc(password) << " " << username << endl;
+			um.insert({ enc(password, proc),username });
+			outfile << enc(password, proc) << " " << username << endl;
 		}
 		else if (select == '2') {
 			cout << "Username" << endl;
@@ -84,12 +118,22 @@ int main() {
 			cout << "Password" << endl;
 			string password;
 			cin >> password;
-			if (um[enc(password)] == username) {
+			bool useexists = false;
+			for (auto it = um.begin(); it != um.end(); ++it) {
+				if (it->second == username) {
+					useexists = true;
+				}
+			}
+			if (um[enc(password, proc)] == username) {
 				cout << "You successfully logged in." << endl;
+				maze();
 				return 0;
 			}
+			else if (useexists == true) {
+				cout << "Incorrect password" << endl;
+			}
 			else {
-				cout << "Incorrect username or password" << endl;
+				cout << "No such username in database" << endl;
 			}
 		}
 		else if (select == '3') {
