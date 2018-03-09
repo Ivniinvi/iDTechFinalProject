@@ -265,19 +265,22 @@ void Map::endCheck() {
 			}
 		}
 		if (action == true) {
+			int dmgdone;
 			int demonact;
 			demonact = 1 + (rand() % static_cast<int>(2 - 1 + 1));
 			if (demonact == 1) {
-				cout << "Anthalon did 20 damage to you" << endl;
-				cout << "Anthalon gained 15 energy" << endl;
-				energy = energy + 15;
+				dmgdone = (rand() % static_cast<int>(20 - 10 + 1));
+				cout << "Anthalon did " << dmgdone << " damage to you" << endl;
+				cout << "Anthalon gained 25 energy" << endl;
+				energy = energy + 25;
 				playerhealth = playerhealth - 20;
 			}
 			if (demonact == 2) {
-				cout << "Anthalon did 25 damage to you" << endl;
-				cout << "Anthalon gained 10 energy" << endl;
-				energy = energy + 10;
-				playerhealth = playerhealth - 25;
+				dmgdone = (rand() % static_cast<int>(25 - 15 + 1));
+				cout << "Anthalon did " << dmgdone << " damage to you" << endl;
+				cout << "Anthalon gained 20 energy" << endl;
+				energy = energy + 20;
+				playerhealth = playerhealth - dmgdone;
 			}
 			if (energy > 99) {
 				cout << "Anthalon unleashes the power of his fully charged doomsday weapon" << endl;
