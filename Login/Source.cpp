@@ -94,6 +94,9 @@ int main() {
 	while (infile >> p&&infile >> u) {
 		um.insert({ p,u });
 	}
+	bool cchar = false;
+	string username;
+	string password;
 	while (true) {
 		char select;
 		cout << "Login Program" << endl;
@@ -102,12 +105,27 @@ int main() {
 		cout << "3:Exit" << endl;
 		cin >> select;
 		if (select == '1') {
-			cout << "Username" << endl;
-			string username;
-			cin >> username;
-			cout << "Password" << endl;
-			string password;
-			cin >> password;
+			while (cchar = false) {
+				cout << "Username" << endl;
+				cin >> username;
+				if (username.length() >= 8) {
+					cchar = true;
+				}
+				else {
+					cout << "Your username must be at least 8 characters." << endl;
+				}
+			}
+			cchar = false;
+			while (cchar = false) {
+				cout << "Password" << endl;
+				cin >> password;
+				if (password.length() >= 8) {
+					cchar = true;
+				}
+				else {
+					cout << "Your password must be at least 8 characters." << endl;
+				}
+			}
 			um.insert({ enc(password, proc),username });
 			outfile << enc(password, proc) << " " << username << endl;
 		}
